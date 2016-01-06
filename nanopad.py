@@ -14,8 +14,13 @@ class Pad(Thread):
 
     def run(self):
         if self.source.get_port_count() > 0:
+            for i in xrange(source.get_port_count()):
+                if re.match("nano",source.get_port_name(i)):
+                    self.source.open_port(i)
+                else:
+                    return
+
             self.loop = True
-            self.source.open_port(1)
             compteur = 0.0
             acc = 0.0
             score = 0
