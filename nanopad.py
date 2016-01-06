@@ -13,9 +13,7 @@ class Pad(Thread):
         self.score = 0.0
 
     def run(self):
-        print self.source.get_port_count()
         if self.source.get_port_count() > 0:
-            print "inside"
             self.loop = True
             self.source.open_port(1)
             compteur = 0.0
@@ -33,7 +31,6 @@ class Pad(Thread):
                     self.score = self.score * 7
                     acc = 0.0
                     compteur = 0.0
-                    # print score
 
         else:
             return
