@@ -14,6 +14,8 @@ DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+############# Used for the crossdomain error #######################
+
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
                 automatic_options=True):
@@ -55,6 +57,7 @@ def crossdomain(origin=None, methods=None, headers=None,
         return update_wrapper(wrapped_function, f)
     return decorator
 
+###################################################################
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -63,6 +66,7 @@ def shutdown_server():
     func()
 
 
+# Init the loop that aquire the data from the controller
 pad = Pad()
 pad.start()
 
@@ -79,6 +83,9 @@ signal.signal(signal.SIGINT, sigterm_handler)
 @app.route("/watt")
 @crossdomain("*")
 def getScore():
+    """
+    Return the score
+    """
     return str(pad.score)
 
 app.run("127.0.0.1",port=80)

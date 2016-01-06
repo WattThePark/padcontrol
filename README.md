@@ -2,7 +2,7 @@
 
 ### Requirements
 * python-rtmidi
-* libjack-jackd2-dev
+* libjack-jackd2-dev libasound-dev
 * Flask
 * Python 2.7.X
 
@@ -46,5 +46,3 @@ JS:
           },100);
       </script>
 ```
-
-

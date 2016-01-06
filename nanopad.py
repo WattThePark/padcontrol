@@ -4,6 +4,7 @@ import rtmidi
 import time
 from threading import Thread
 
+
 class Pad(Thread):
     """docstring for Pad"""
 
@@ -13,17 +14,21 @@ class Pad(Thread):
         self.score = 0.0
 
     def run(self):
+        """
+        Run the mainloop. Aquire and save the data from the controller.
+        """
         if self.source.get_port_count() > 0:
+            # Connect to the good midi port
             for i in xrange(source.get_port_count()):
-                if re.match("nano",source.get_port_name(i)):
+                if re.match("nano", source.get_port_name(i)):
                     self.source.open_port(i)
                 else:
                     return
 
             self.loop = True
-            compteur = 0.0
-            acc = 0.0
-            score = 0
+            compteur , acc , score = 0.0, 0.0 , 0.0
+
+            toWatt = 7
             while(self.loop):
                 time.sleep(0.01)
                 data = self.source.get_message()
@@ -32,13 +37,14 @@ class Pad(Thread):
                     acc += 1
                 if compteur > 0.4:
                     self.score = self.score + acc - self.score
-                    # Transformation en Watt
-                    self.score = self.score * 7
-                    acc = 0.0
-                    compteur = 0.0
 
+                    self.score = self.score * toWatt
+                    acc , compteur = 0.0 , 0.0
         else:
             return
 
     def stop(self):
+        """
+        Stop the main loop
+        """
         self.loop = False
