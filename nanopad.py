@@ -1,6 +1,6 @@
 # coding=utf-8
 
-import rtmidi
+import rtmidi,re
 import time
 from threading import Thread
 
@@ -19,8 +19,8 @@ class Pad(Thread):
         """
         if self.source.get_port_count() > 0:
             # Connect to the good midi port
-            for i in xrange(source.get_port_count()):
-                if re.match("nano", source.get_port_name(i)):
+            for i in xrange(self.source.get_port_count()):
+                if re.match("nano", self.source.get_port_name(i)):
                     self.source.open_port(i)
                 else:
                     return
