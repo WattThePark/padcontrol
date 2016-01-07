@@ -57,7 +57,7 @@
                             <script>
 								(function() {
 								    $.ajax({
-								        url: 'http://localhost:3000/top/'+idMachine+'/10',
+								        url: 'http://localhost:3000/top/10',
 								    })
                                     .done(function(data) {
                                         var obj = jQuery.parseJSON(data);
@@ -92,7 +92,7 @@
                     <br/>
                     <br/>
                 </div>
-                <p><a style="margin-right:1em" class="btn btn-lg btn-success btnRetour" href="./recordsAll.html" role="button">Voir tous les records</a><a class="btn btn-lg btn-success btnRetour" href="./accueil.html" role="button">Retour</a></p>
+                <p><a class="btn btn-lg btn-success btnRetour" href="./accueil.html" role="button">Retour</a></p>
             </div>
     </body>
 
