@@ -3,6 +3,7 @@ var start = 0
 var end = 0
 var diff = 0
 var timerID = 0
+var global_time=0
 
 function chrono(){
 	end = new Date()
@@ -12,7 +13,7 @@ function chrono(){
 	var sec = diff.getSeconds()
 	var min = diff.getMinutes()
 	var hr = diff.getHours()-1
-
+	global_time =hr*3600+min*60+sec
 	if(hr < 10){
 		hr = "0" + hr
 	}
@@ -29,6 +30,7 @@ function chrono(){
 		msec = "0" +msec
 	}
 	document.getElementById("chronotime").innerHTML = hr + ":" + min + ":" + sec + ":" + msec
+
 	timerID = setTimeout("chrono()", 10)
 }
 function chronoStart(){
@@ -121,7 +123,7 @@ function chronoReset(){
 }
 function chronoStopReset(){
 	document.getElementById("chronotime").innerHTML = "00:00:00:000"
-	
+
 }
 function chronoStop(){
 	tmp = 1

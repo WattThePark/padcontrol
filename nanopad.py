@@ -24,7 +24,7 @@ class Pad(Thread):
             self.loop = True
             compteur , acc , score = 0.0, 0.0 , 0.0
 
-            toWatt = 7
+            toWatt = 2
             while(self.loop):
                 time.sleep(0.01)
                 data = self.source.get_message()
