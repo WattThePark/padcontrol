@@ -25,6 +25,7 @@
   <link href="css/pseudo.css" rel="stylesheet">
 
   <script type="text/javascript" src="js/timer.js"></script>
+  <script type="text/javascript" src="js/machine.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" charset="utf-8"></script>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" media="screen" title="no title" charset="utf-8">
@@ -55,7 +56,7 @@
             <img src="images/logo.png" alt="" width="200" height="200" />
           </div>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Félicitation vous avez générer :
+          <h4 class="modal-title">Nos félicitations vous avez obtenu un score de 
             <span id="score"></span>
           </h4>
         </div>
@@ -185,7 +186,7 @@
           global_time -= 5;
           //console.log('http://localhost:3500/insert/result&idMachine='+idMachine+'&feedback='+feedback+'&score='+score+'&nameuser='+name)
           $.ajax({
-            url: 'http://localhost:3500/insert/result?time=' + global_time + '&idMachine=' + idMachine + '&feedback=' + encodeURIComponent(feedback) + '&score=' + score + '&nameuser=' + encodeURIComponent(name),
+            url: 'http://localhost:3000/insert/result?time=' + global_time + '&idMachine=' + idMachine + '&feedback=' + encodeURIComponent(feedback) + '&score=' + score + '&nameuser=' + encodeURIComponent(name),
             type: 'GET',
             success: function(code_html, statut) {
               $("#myModal").modal('hide');
@@ -202,23 +203,31 @@
         var startTimer = false;
         var afkCount = 0;
         var maxPile = 2000;
-        var idMachine = 2;
+        var timeAfkBeforeReturn = 0;
         $("#closeModal").click(function(event) {
           sendScore(idMachine, $("#name").val(), parseInt($("#inviScore").text()), $("#feedback").val());
           $("#myModal").modal('hide');
         });
 
         window.setInterval(function() {
+            if(!startTimer)
+                timeAfkBeforeReturn++;
+
+            if(timeAfkBeforeReturn > 1200) {
+                window.location = "accueil.html";
+            }
+
           $.ajax({
-            url: 'http://localhost:3000/watt',
+            url: 'http://localhost:4000/watt',
             type: 'GET',
             success: function(code_html, statut) {
               var value = parseFloat(code_html);
               if (afkCount > 50) {
+
                 startTimer = false;
                 afkCount = 0;
                 $("#inviScore").text(nbPile * 500 + ((total - nbPile * maxPile) / maxPile) * 500)
-                $("#score").text(total+" Watts");
+                $("#score").text(total);
                 total = 0;
                 nbPile = 0
                 chronoStop();
@@ -228,6 +237,7 @@
               }
               if (startTimer) {
                 total += value;
+
                 var percent = ((total - nbPile * maxPile) / maxPile) * 100;
                 if (percent > 100) {
                   nbPile++;
@@ -248,6 +258,7 @@
               }
               if (value != 0.0 && !startTimer) {
                 startTimer = true;
+                timeAfkBeforeReturn = 0;
                 chronoStart();
               }
               //console.log(total);

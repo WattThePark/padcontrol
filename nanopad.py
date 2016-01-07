@@ -19,7 +19,7 @@ class Pad(Thread):
         """
         if self.source.get_port_count() > 0:
             # Connect to the good midi port
-            self.source.open_port(0)
+            self.source.open_port(1)
 
             self.loop = True
             compteur , acc , score = 0.0, 0.0 , 0.0
