@@ -1,0 +1,136 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/fav.png">
+
+    <title>C'est parti !</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+	<link href="css/accueil.css" rel="stylesheet">
+    <link href="css/timer.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="js/timer.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+<body>
+	<div class="container">
+	
+		<div class="jumbotron">
+		
+			<!-- Chronomètre -->
+			<span id="chronotime">00:00:00:00</span>
+			<br/><br/><br/>
+			<form name="chronoForm">
+				<a class="btn btn-lg btn-success" id="startstop" name="startstop" value="start!" onClick="chronoStart()">Lancer le chrono</a>
+				<!--<a class="btn btn-lg btn-success" id="reset" name="reset" value="reset!" onClick="chronoReset()">Recommencer</a>-->
+				<script type="text/javascript" src="js/timer.js"></script>
+			</form>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<p>
+			<center>
+			
+			<!-- Pile -->
+			<div id="mydiv">
+				<img id="image" src="images/batterie.png">
+				<h2 id="text"></h2>
+				
+			</div>
+			</center>
+			</p>
+			<br/>
+			<br/>
+			<br/>
+
+				<script type="text/javascript" src="js/pile.js"></script>
+            <script type="text/javascript">
+
+function setPile(percent) {
+    var val = Math.floor(100 - percent);
+    console.log("Percent " + val); 
+//    console.log($("#mydiv").css('background'));
+    console.log('linear-gradient(to bottom, white 0%,white ' + val +'%' + ',rgba(64,187,106,1) '+ val+ '%)');
+    $("#mydiv").css('background','linear-gradient(to bottom, white 0%,white ' + val +'%' + ',rgba(64,187,106,1) '+ val+ '%)');
+	 document.getElementById("text").innerHTML = Math.floor(percent) + " %";
+}
+
+
+var total = 0.0;
+var startTimer = false;
+var afkCount = 0;
+var maxPile = 20000;
+window.setInterval(function(){
+    $.ajax({
+        url : 'http://localhost:3000/watt',
+        type : 'GET',
+        success : function(code_html, statut){
+            var value = parseFloat(code_html);
+            if(afkCount > 20) {
+                startTimer = false;
+                afkCount = 0;
+                total = 0;
+                chronoStop();
+            }
+            if(startTimer) {
+                total += value;
+                setPile((total/maxPile)*100);
+                if(value == 0.0) {
+                    afkCount++;
+                }else {
+                    afkCount = 0;
+                }
+            }
+            if(value != 0.0 && !startTimer) {
+                startTimer = true;
+                chronoStart();
+            }
+            console.log(total);
+            //$("#number").text(code_html+" W");
+        },
+    });
+},100);
+            </script>
+
+            <!-- Pavé des boutons -->
+            <div class="boutons">
+                <p>
+                <a class="btn btn-lg btn-success" href="./accueil.html" role="button">Quitter</a>
+                <a class="btn btn-lg btn-success" href="./records.html" role="button">Records</a>
+                </p>		
+            </div>				
+        </div>
+
+        <!-- Pied de page -->
+        <footer class="footer">
+            <p>Projet Intensif 2016 - Groupe 7 - Watt The Park </p>
+        </footer>
+    </div>
+
+
+</body>
+
+</html>
