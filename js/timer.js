@@ -12,7 +12,7 @@ function chrono(){
 	var sec = diff.getSeconds()
 	var min = diff.getMinutes()
 	var hr = diff.getHours()-1
-	
+
 	if(hr < 10){
 		hr = "0" + hr
 	}
@@ -32,11 +32,10 @@ function chrono(){
 	timerID = setTimeout("chrono()", 10)
 }
 function chronoStart(){
-	document.getElementById("startstop").innerHTML = "Arrêter le chrono"
-	document.getElementById("startstop").onclick = chronoStop
+
 	//document.getElementById("reset").onclick = chronoReset
 	start = new Date()
-	
+
 			var delay = ( function() {
 			var timer = 0;
 			return function(callback, ms) {
@@ -88,7 +87,7 @@ function chronoStart(){
 		delay(function(){
 		// do stuff
 		document.getElementById("image").src="./images/batterie-fin.png";
-		
+
 		document.getElementById("text").innerHTML="Vous avez généré 100 Watts <br/>";
 		}, 1000 );
 		}, 1000 );
@@ -105,13 +104,12 @@ function chronoStart(){
 
 
 		}, 1000 );*/
-	
+
 
 	chrono()
 }
 function chronoContinue(){
-	document.getElementById("startstop").innerHTML = "Arrêter le chrono"
-	document.getElementById("startstop").onclick = chronoStop
+
 	//document.getElementById("reset").onclick = chronoReset
 	start = new Date()-diff
 	start = new Date(start)
@@ -123,12 +121,11 @@ function chronoReset(){
 }
 function chronoStopReset(){
 	document.getElementById("chronotime").innerHTML = "00:00:00:000"
-	document.getElementById("startstop").onclick = chronoStart
+	
 }
 function chronoStop(){
 	tmp = 1
-	document.getElementById("startstop").innerHTML = "Lancer le chrono"
-	document.getElementById("startstop").onclick = chronoContinue
+
 	//document.getElementById("reset").onclick = chronoStopReset
 	clearTimeout(timerID)
 }
