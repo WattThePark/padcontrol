@@ -57,7 +57,7 @@
                             <script>
 								(function() {
 								    $.ajax({
-								        url: 'http://localhost:3000/top/'+idMachine+'/10',
+								        url: 'http://' + ip + ':3000/top/'+idMachine+'/10',
 								    })
                                     .done(function(data) {
                                         var obj = jQuery.parseJSON(data);

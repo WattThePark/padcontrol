@@ -186,7 +186,7 @@
           global_time -= 5;
           //console.log('http://localhost:3500/insert/result&idMachine='+idMachine+'&feedback='+feedback+'&score='+score+'&nameuser='+name)
           $.ajax({
-            url: 'http://localhost:3000/insert/result?time=' + global_time + '&idMachine=' + idMachine + '&feedback=' + encodeURIComponent(feedback) + '&score=' + score + '&nameuser=' + encodeURIComponent(name),
+            url: 'http://' + ip + ':3000/insert/result?time=' + global_time + '&idMachine=' + idMachine + '&feedback=' + encodeURIComponent(feedback) + '&score=' + score + '&nameuser=' + encodeURIComponent(name),
             type: 'GET',
             success: function(code_html, statut) {
               $("#myModal").modal('hide');

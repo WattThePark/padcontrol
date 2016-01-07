@@ -1,1 +1,2 @@
-var idMachine = 2;
+var idMachine = 1;
+var ip = "localhost";
