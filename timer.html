@@ -204,7 +204,7 @@
             }
 
           $.ajax({
-            url: 'http://'+ip+':5000/watt',
+            url: 'http://'+ip+':'+port+'/watt',
             type: 'GET',
             success: function(code_html, statut) {
               var value = parseFloat(code_html);
